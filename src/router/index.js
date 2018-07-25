@@ -30,6 +30,7 @@ export default new Router({
     {
       path: '/meetups/:id',
       name: 'meetup',
+      props: true, // we can get id like props in component
       component: Meetup
     },
     {

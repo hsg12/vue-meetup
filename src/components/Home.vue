@@ -34,18 +34,14 @@
 
 <script>
 export default {
-  data () {
-    return {
-      meetups: [
-        {imageUrl: 'https://www.cornellclubnyc.com/Images/Library/slider-2.jpg', id: '1', title: 'Meetup in New-York'},
-        {imageUrl: 'https://odis.homeaway.com/odis/destination/89743017-322b-4941-a653-9f404eabda04.hw1.jpg', id: '2', title: 'Meetup in Paris'},
-        {imageUrl: 'http://www.ibsa-master.com/fileadmin/_processed_/0/c/csm_Study_in_Moscow_MBA_Master_d22e7f9236.jpg', id: '3', title: 'Meetup in Moscow'}
-      ]
+  computed: {
+    meetups () {
+      return this.$store.getters.featuredMeetups
     }
   },
   methods: {
     onLoadMeetup (meetupId) {
-      //this.$router.push('/meetup/' + meetupId)
+      // this.$router.push('/meetup/' + meetupId)
       this.$router.push({name: 'meetup', params: {id: meetupId}})
     }
   }
