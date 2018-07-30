@@ -97,8 +97,6 @@
 </template>
 
 <script>
-import moment from 'moment'
-
 export default {
   data () {
     return {
@@ -106,7 +104,7 @@ export default {
       location: '',
       imageUrl: '',
       description: '',
-      date: new Date(),
+      date: null,
       time: new Date()
     }
   },
@@ -114,7 +112,7 @@ export default {
     formIsValid () {
       return this.title !== '' && this.location !== '' && this.imageUrl !== '' && this.description !== ''
     },
-    /*submitableDateTime () {
+    submitableDateTime () {
       const date = new Date(this.date)
       if (typeof this.time === 'string') {
         let hours = this.time.match(/^(\d+)/)[1]
@@ -127,7 +125,7 @@ export default {
       }
 
       return date
-    }*/
+    }
   },
   methods: {
     onCreateMeetup () {
@@ -140,23 +138,17 @@ export default {
         location: this.location,
         imageUrl: this.imageUrl,
         description: this.description,
-        // date: this.submitableDateTime,
-        date: this.date + ' | ' + this.time,
+        date: this.submitableDateTime,
         id: '100'
       }
       this.$store.commit('createMeeetup', meetupData)
 
       this.$router.push({name: 'meetups'})
     }
-  },
-  created() {
-    const dateTime = moment()
-    this.date = dateTime.format("YYYY-MM-DD")
-    this.time = dateTime.format("HH:mm")
-  }﻿
+  }
 }
 </script>
 
 <style>
-  
+
 </style>
