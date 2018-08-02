@@ -7,7 +7,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     loadedMeetups: [
-      {
+      /* {
         imageUrl: 'https://www.cornellclubnyc.com/Images/Library/slider-2.jpg',
         id: '1',
         title: 'Meetup in New-York',
@@ -30,13 +30,16 @@ export default new Vuex.Store({
         date: new Date(),
         location: 'Moscow',
         description: 'Description for Moscow'
-      }
+      } */
     ],
     user: null,
     loading: false,
     error: null
   },
   mutations: {
+    setLoadedMeetups (state, payload) {
+      state.loadedMeetups = payload
+    },
     createMeeetup (state, payload) {
       state.loadedMeetups.push(payload)
     },
@@ -54,15 +57,50 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    loadMeetups ({commit}) {
+      commit('setLoading', true)
+      firebase.database().ref('meetups').once('value')
+        .then(data => {
+          const meetups = []
+          const obj = data.val()
+          for (let key in obj) {
+            meetups.push({
+              id: key,
+              title: obj[key].title,
+              description: obj[key].description,
+              imageUrl: obj[key].imageUrl,
+              location: obj[key].location,
+              date: obj[key].date
+            })
+          }
+          
+          commit('setLoadedMeetups', meetups)
+          commit('setLoading', false)
+        })
+        .catch(error => {
+          console.log(error)
+          commit('setLoading', true)
+        })
+    },
     createMeeetup ({commit}, payload) {
       const meetup = {
         title: payload.title,
         location: payload.location,
         imageUrl: payload.imageUrl,
         description: payload.description,
-        date: payload.date
+        date: payload.date.toISOString()
       }
-      commit('createMeeetup', meetup)
+      firebase.database().ref('meetups').push(meetup)
+        .then((data) => {
+          const key = data.key
+          commit('createMeeetup', {
+            ...meetup,
+            id: key
+          })
+        })
+        .catch(error => {
+          console.log(error)
+        })
     },
     signUserUp ({commit}, payload) {
       commit('setLoading', true)

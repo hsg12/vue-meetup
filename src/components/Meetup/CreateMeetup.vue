@@ -141,7 +141,7 @@ export default {
         date: this.submitableDateTime,
         id: '100'
       }
-      this.$store.commit('createMeeetup', meetupData)
+      this.$store.dispatch('createMeeetup', meetupData)
 
       this.$router.push({name: 'meetups'})
     }
