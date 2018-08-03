@@ -2,6 +2,7 @@
   <v-app>
     <v-navigation-drawer app temporary v-model="sideNav">
       <v-list>
+
         <v-list-tile 
           v-for="item in menuItems" 
           :key="item.title"
@@ -14,6 +15,16 @@
             <v-list-tile-title>{{ item.title }}</v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
+
+        <v-list-tile v-if="userIsAuthenticated" @click="onLogout">
+          <v-list-tile-action>
+            <v-icon left>exit_to_app</v-icon>
+          </v-list-tile-action>
+          <v-list-tile-content>
+            <v-list-tile-title>Logout</v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+
       </v-list>
     </v-navigation-drawer>
     <v-toolbar dark class="purple darken-4">
@@ -23,6 +34,7 @@
       </v-toolbar-title>
       <v-spacer></v-spacer>
       <v-toolbar-items class="hidden-sm-and-down">
+
         <v-btn flat 
           v-for="item in menuItems" 
           :key="item.title"
@@ -31,6 +43,12 @@
           <v-icon left>{{ item.icon }}</v-icon>
           {{ item.title }}
         </v-btn>
+
+        <v-btn flat v-if="userIsAuthenticated" @click="onLogout">
+          <v-icon left>exit_to_app</v-icon>
+          Logout
+        </v-btn>
+
       </v-toolbar-items>
     </v-toolbar>
     <main>
@@ -67,7 +85,12 @@ export default {
       return this.$store.getters.user !== null && this.$store.getters.user !== undefined
     }
   },
-  name: 'App'
+  methods: {
+    onLogout () {
+      this.$store.dispatch('logout')
+    }
+  }
+  // name: 'App'
 }
 </script>
 
