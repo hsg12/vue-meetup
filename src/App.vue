@@ -90,7 +90,6 @@ export default {
       this.$store.dispatch('logout')
     }
   }
-  // name: 'App'
 }
 </script>
 

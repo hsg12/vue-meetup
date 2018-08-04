@@ -36,25 +36,6 @@
 
           <v-layout row>
             <v-flex xs12 sm6 offset-sm3>
-              <v-text-field
-                name="imageUrl"
-                label="Image"
-                id="image-url"
-                v-model="imageUrl"
-                required
-              >
-              </v-text-field>
-            </v-flex>
-          </v-layout>
-
-          <v-layout row>
-            <v-flex xs12 sm6 offset-sm3>
-              <img :src="imageUrl" height="100">
-            </v-flex>
-          </v-layout>
-
-          <v-layout row>
-            <v-flex xs12 sm6 offset-sm3>
               <v-textarea
                 name="description"
                 label="Description"
@@ -66,7 +47,33 @@
             </v-flex>
           </v-layout>
 
-          <v-layout row justify-center  class="mb-3">
+          <v-layout row>
+            <v-flex xs12 sm6 offset-sm3>
+              <v-btn 
+                raised 
+                class="purple darken-4" 
+                dark
+                @click="onPickFile"
+              >
+                Upload Image
+              </v-btn>
+              <input 
+                type="file" 
+                style="display: none" 
+                ref="fileInput"
+                accept="image/*"
+                @change="onFilePicked"
+              >
+            </v-flex>
+          </v-layout>
+
+          <v-layout row class="mt-3 mb-4">
+            <v-flex xs12 sm6 offset-sm3>
+              <img :src="imageUrl" height="100">
+            </v-flex>
+          </v-layout>
+
+          <v-layout row justify-center class="mb-3">
             <v-flex xs12 offset-sm3>
               <h4>Choose a date and time</h4>
             </v-flex>
@@ -105,7 +112,8 @@ export default {
       imageUrl: '',
       description: '',
       date: null,
-      time: new Date()
+      time: new Date(),
+      image: null
     }
   },
   computed: {
@@ -132,11 +140,14 @@ export default {
       if (!this.formIsValid) {
         return
       }
+      if (!this.image) {
+        return
+      }
 
       const meetupData = {
         title: this.title,
         location: this.location,
-        imageUrl: this.imageUrl,
+        image: this.image,
         description: this.description,
         date: this.submitableDateTime,
         id: '100'
@@ -144,6 +155,22 @@ export default {
       this.$store.dispatch('createMeeetup', meetupData)
 
       this.$router.push({name: 'meetups'})
+    },
+    onPickFile () {
+      this.$refs.fileInput.click()
+    },
+    onFilePicked (event) {
+      const files = event.target.files
+      let filename = files[0].name
+      if (filename.lastIndexOf('.') <= 0) {
+        alert('Please add a valid image!')
+      }
+      const fileReader = new FileReader()
+      fileReader.addEventListener('load', () => {
+        this.imageUrl = fileReader.result
+      })
+      fileReader.readAsDataURL(files[0])
+      this.image = files[0]
     }
   }
 }
