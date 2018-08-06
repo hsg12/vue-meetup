@@ -7,6 +7,7 @@ import store from './store'
 import 'vuetify/dist/vuetify.min.css'
 import DateFilter from './filters/date'
 import AlertCmp from './components/Shared/Alert.vue'
+import EditMeetup from './components/Meetup/Edit/EditMeetup.vue'
 
 Vue.use(Vuetify)
 
@@ -15,6 +16,7 @@ Vue.filter('date', DateFilter)
 Vue.config.productionTip = false
 
 Vue.component('app-alert', AlertCmp)
+Vue.component('app-edit-meetup', EditMeetup)
 
 /* eslint-disable no-new */
 new Vue({
