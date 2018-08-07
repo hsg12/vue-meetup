@@ -53,8 +53,8 @@ export default new Vuex.Store({
       if (payload.description) {
         meetup.description = payload.description
       }
-      if (payload.data) {
-        meetup.data = payload.data
+      if (payload.date) {
+        meetup.date = payload.date
       }
     },
     setUser (state, payload) {

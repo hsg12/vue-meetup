@@ -26,8 +26,12 @@
             height="400px"
           ></v-card-media>
           <v-card-text>
-            <div><strong>{{ meetup.date | date }} - {{ meetup.location }}</strong></div>
-            <br>
+            <div>
+              <strong>{{ meetup.date | date }} - {{ meetup.location }}</strong>
+              <app-edit-meetup-date :meetup="meetup" v-if="userIsCreator"></app-edit-meetup-date>
+              <app-edit-meetup-time :meetup="meetup" v-if="userIsCreator"></app-edit-meetup-time>
+            </div>
+            <hr class="my-3">
             <div>{{ meetup.description }}</div>
           </v-card-text>
           <v-card-actions>
@@ -45,9 +49,6 @@ export default {
   props: ['id'], // we receive props from router
   computed: {
     meetup () {
-      // let id = this.$route.params.id
-      // return this.$store.getters.loadedMeetup(id)
-
       return this.$store.getters.loadedMeetup(this.id)
     },
     userIsAuthenticated () {
