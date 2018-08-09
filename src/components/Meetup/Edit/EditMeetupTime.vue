@@ -18,7 +18,7 @@
         <v-layout row wrap>
           <v-flex xs12>
             <v-time-picker v-model="editableTime" style="width: 100%" actions format="24hr">
-              <template scope="{save, cancel}">
+              <template slot-scope="{save, cancel}">
                 <v-btn flat dark class="purple--text darken-4" @click.native="editDialog = false">Close</v-btn>
                 <v-spacer></v-spacer>
                 <v-btn flat dark class="purple--text darken-4" @click.native="onSaveChanges">Save</v-btn>
@@ -57,11 +57,11 @@ export default {
     }
   },
   created () {
-    let date = new Date(this.meetup.date);
-    let hours = date.getHours();
-    let minutes = date.getMinutes();
-    
-    this.editableTime = hours + ":" + minutes;
+    let date = new Date(this.meetup.date)
+    let hours = date.getHours()
+    let minutes = date.getMinutes()
+
+    this.editableTime = hours + ':' + minutes
   }
 }
 </script>

@@ -10,6 +10,7 @@ import AlertCmp from './components/Shared/Alert.vue'
 import EditMeetup from './components/Meetup/Edit/EditMeetup.vue'
 import EditMeetupDate from './components/Meetup/Edit/EditMeetupDate.vue'
 import EditMeetupTime from './components/Meetup/Edit/EditMeetupTime.vue'
+import RegisterDialog from './components/Meetup/Registration/RegisterDialog.vue'
 
 Vue.use(Vuetify)
 
@@ -21,6 +22,7 @@ Vue.component('app-alert', AlertCmp)
 Vue.component('app-edit-meetup', EditMeetup)
 Vue.component('app-edit-meetup-date', EditMeetupDate)
 Vue.component('app-edit-meetup-time', EditMeetupTime)
+Vue.component('app-meetup-register-dialog', RegisterDialog)
 
 /* eslint-disable no-new */
 new Vue({
