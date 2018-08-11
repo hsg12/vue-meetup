@@ -12,6 +12,12 @@
       </v-flex>
     </v-layout>
 
+    <v-layout row wrap class="my-3">
+      <v-flex xs12 class="text-xs-center">
+        <h2>Join our meetups!</h2>
+      </v-flex>
+    </v-layout>
+
     <v-layout row wrap v-if="!loading">
       <v-flex xs12>
         <v-carousel class="pointer">
@@ -27,7 +33,7 @@
       </v-flex>
     </v-layout>
 
-    <v-layout row wrap class="mt-3">
+    <v-layout row wrap class="mt-3" v-if="!userIsAuthenticated">
       <v-flex xs12 sm6 class="text-xs-center text-sm-right">
         <v-btn large router :to="{name: 'meetups'}" color="purple darken-4" dark>Explore Meetups</v-btn>
       </v-flex>
@@ -36,11 +42,6 @@
       </v-flex>
     </v-layout>
 
-    <v-layout row wrap class="mt-3">
-      <v-flex xs12 class="text-xs-center">
-        <p>Join our meetups!</p>
-      </v-flex>
-    </v-layout>
   </v-container>
 </template>
 
@@ -52,11 +53,13 @@ export default {
     },
     loading () {
       return this.$store.getters.loading
+    },
+    userIsAuthenticated () {
+      return this.$store.getters.user !== null && this.$store.getters.user !== undefined
     }
   },
   methods: {
     onLoadMeetup (meetupId) {
-      // this.$router.push('/meetup/' + meetupId)
       this.$router.push({name: 'meetup', params: {id: meetupId}})
     }
   }

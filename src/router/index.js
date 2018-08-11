@@ -4,7 +4,6 @@ import Home from '@/components/Home'
 import CreateMeetup from '@/components/Meetup/CreateMeetup'
 import Meetups from '@/components/Meetup/Meetups'
 import Meetup from '@/components/Meetup/Meetup'
-import Profile from '@/components/User/Profile'
 import Signin from '@/components/User/Signin'
 import Signup from '@/components/User/Signup'
 import AuthGuard from './auth-guard'
@@ -34,12 +33,6 @@ export default new Router({
       name: 'meetup',
       props: true, // we can get id like props in component
       component: Meetup
-    },
-    {
-      path: '/profile',
-      name: 'profile',
-      component: Profile,
-      beforeEnter: AuthGuard
     },
     {
       path: '/signin',
